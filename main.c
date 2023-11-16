@@ -12,11 +12,25 @@ int main()
       return 1;
   }
   char letr;
-    while ((letr = fgetc(fp)) != "x")
-        putchar(letr);
- // aqui eu preciso adicionar o char coletado aos tads
-    // close the file
-    fclose(fp);
+ while ((letr = fgetc(fp)) != "x") {
+        // Create a new node for the current character
+        struct Tad* newNode = (struct Tad*)malloc(sizeof(struct Tad));
+        newNode->data = letr;
+        newNode->next = NULL;
 
-    return 0;
-}
+        // If it's the first character, set it as the head
+        if (head == NULL) {
+            head = newNode;
+            current = head;
+        } else {
+            // Otherwise, append the new node to the list
+            current->next = newNode;
+            current = newNode;
+        }
+
+        // Print the character if needed
+        putchar(letr);
+    }
+
+    // Close the file
+    fclose(fp);
