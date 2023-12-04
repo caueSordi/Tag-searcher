@@ -1,12 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
+
 #include "arvore.h" //inclui os Prot�tipos
 
-struct NO{
-    int info;
-    struct NO *esq;
-    struct NO *dir;
-};
+
 
 ArvBin* cria_ArvBin(){
     ArvBin* raiz = (ArvBin*) malloc(sizeof(ArvBin));
@@ -31,8 +26,10 @@ void libera_ArvBin(ArvBin* raiz){
     free(raiz);//libera a raiz
 }
 
-int insere_ArvBin(ArvBin* raiz, const char* valor) {
-    if (raiz == NULL || valor == NULL)
+int insere_ArvBin(ArvBin* raiz, tipo_dado data)
+
+{
+    if (raiz == NULL)
         return 0;
     struct NO* novo;
     novo = (struct NO*) malloc(sizeof(struct NO));
@@ -40,26 +37,32 @@ int insere_ArvBin(ArvBin* raiz, const char* valor) {
         return 0;
     novo->dir = NULL;
     novo->esq = NULL;
+strncpy(novo -> info.tag,data.tag,tamanho_tag);
+novo ->info.tag[strlen(novo ->info.tag)]; '\0';
+novo -> info.status = data.status;
 
     if (*raiz == NULL)
         *raiz = novo;
     else {
         struct NO* atual = *raiz;
         struct NO* ant = NULL;
-        while (atual != NULL) {
+
+
+        while (atual != NULL)
+        {
             ant = atual;
-            if (strcmp(valor, atual->info) == 0)
+            if (strncmp(data.tag, atual->info.tag,tamanho_tag) == 0)//se zero igual ent ja tem
             {
                 free(novo);
-                return 0; // Element already exists
+                return 0; //já tem na arvre
             }
 
-            if (strcmp(valor, atual->info) < 0)
+            if (strncmp(data.tag, atual->info.tag,tamanho_tag) > 0)
                 atual = atual->dir;
             else
                 atual = atual->esq;
         }
-        if (strcmp(valor, ant->info) > 0)
+        if (strncmp(data.tag, atual->info.tag,tamanho_tag) > 0)
             ant->dir = novo;
         else
             ant->esq = novo;
@@ -92,31 +95,8 @@ struct NO* remove_atual(struct NO* atual) {
     return no2;
 }
 // http://www.ime.usp.br/~pf/algoritmos/aulas/binst.html
-int remove_ArvBin(ArvBin *raiz, int valor){
-    if(raiz == NULL)
-        return 0;
-    struct NO* ant = NULL;
-    struct NO* atual = *raiz;
-    while(atual != NULL){
-        if(valor == atual->info){
-            if(atual == *raiz)
-                *raiz = remove_atual(atual);
-            else{
-                if(ant->dir == atual)
-                    ant->dir = remove_atual(atual);
-                else
-                    ant->esq = remove_atual(atual);
-            }
-            return 1;
-        }
-        ant = atual;
-        if(valor > atual->info)
-            atual = atual->dir;
-        else
-            atual = atual->esq;
-    }
-    return 0;
-}
+//no one cares about the remove, amen
+
 
 int estaVazia_ArvBin(ArvBin *raiz){
     if(raiz == NULL)
@@ -152,24 +132,34 @@ int altura_ArvBin(ArvBin *raiz){
 int consulta_ArvBin(ArvBin *raiz, int valor){
     if(raiz == NULL)
         return 0;
+
+    int qdteNodes = 0;
     struct NO* atual = *raiz;
     while(atual != NULL){
-        if(valor == atual->info){
+        if strcmp(tag, atual ->info.tag,tamanho_tag) == 0 )
+        {
+
+
             return 1;
         }
-        if(valor > atual->info)
+        if(strcmp(tag,atual ->info.tag,tamanho_tag) > 0)
             atual = atual->dir;
         else
             atual = atual->esq;
+
+
+            qtdeNodes++;
     }
-    return 0;
+
+    return (-1*qtdeNodes);
 }
 
 void preOrdem_ArvBin(ArvBin *raiz){
     if(raiz == NULL)
         return;
-    if(*raiz != NULL){
-        printf("%d\n",(*raiz)->info);
+    if(*raiz != NULL)
+    {
+        printf(); "%s %d\n", (*raiz)->info.tag,(*raiz)->info.status);
         preOrdem_ArvBin(&((*raiz)->esq));
         preOrdem_ArvBin(&((*raiz)->dir));
     }
@@ -180,7 +170,7 @@ void emOrdem_ArvBin(ArvBin *raiz){
         return;
     if(*raiz != NULL){
         emOrdem_ArvBin(&((*raiz)->esq));
-        printf("%d\n",(*raiz)->info);
+        printf("%s %d\n",(*raiz)->info.tag,(*raiz)->info.status);
         emOrdem_ArvBin(&((*raiz)->dir));
     }
 }
