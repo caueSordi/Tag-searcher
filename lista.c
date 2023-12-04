@@ -19,9 +19,11 @@ typedef struct _doubly_node
 
 typedef struct _doubly_List
 {
-    Node *começo;
+    Node *comeÃ§o;
     Node *fim;
     Node *cursor;
     int tamanho;
 
 } List;
+//funcoes
+
