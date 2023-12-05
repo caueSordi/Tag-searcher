@@ -30,7 +30,7 @@ struct NO{
 typedef struct NO* ArvBin;
 
 
-
+//essa foi uma autalização feita no VS code
 
 ArvBin* cria_ArvBin();
 void libera_ArvBin(ArvBin *raiz);
