@@ -1,4 +1,4 @@
-No-Enthusiasm-2881#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include "arvore.h"
 int main()
