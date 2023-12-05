@@ -129,14 +129,15 @@ int altura_ArvBin(ArvBin *raiz){
         return(alt_dir + 1);
 }
 
-int consulta_ArvBin(ArvBin *raiz, int valor){
+int consulta_ArvBin(ArvBin *raiz, int valor)
+{
     if(raiz == NULL)
         return 0;
 
-    int qdteNodes = 0;
+    int qtdeNodes = 0;
     struct NO* atual = *raiz;
     while(atual != NULL){
-        if strcmp(tag, atual ->info.tag,tamanho_tag) == 0 )
+        if strcmp((tag, atual ->info.tag,tamanho_tag) == 0 )
         {
 
 
@@ -159,7 +160,7 @@ void preOrdem_ArvBin(ArvBin *raiz){
         return;
     if(*raiz != NULL)
     {
-        printf(); "%s %d\n", (*raiz)->info.tag,(*raiz)->info.status);
+        printf ("%s %d\n"), ((*raiz)->info.tag,(*raiz)->info.status);
         preOrdem_ArvBin(&((*raiz)->esq));
         preOrdem_ArvBin(&((*raiz)->dir));
     }
