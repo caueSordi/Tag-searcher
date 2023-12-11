@@ -50,3 +50,36 @@ L -> fim = NULL;
 return L;
 }
 
+
+
+void destroi_lista( List** _L_ref)
+{
+    List *L= *_L_ref;
+    Node *p = L -> inicio;
+    Node *aux = NULL;
+
+    while(p != NULL)
+    {
+        aux=p;
+        p = p -> prox;
+        free(aux);
+    }
+    free(L);
+    *_L_ref = NULL;
+}
+
+void adiciona_primeiro_lista(List*L,TypeData val)
+{
+    Node *p = Cria_no(val);
+    p -> prox = L -> inicio;
+    if(lista_vazia(L))
+    
+        L-> fim=p;
+    
+    else 
+    L= inicio = ant=p;
+
+    L->inicio = L ->cursor=p;
+    L= tamanho++;
+}
+
