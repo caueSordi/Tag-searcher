@@ -3,11 +3,11 @@
 
 // strct
 
-typedef struct inf
+typedef struct _info
 {
-    ins status;
+    int status;
     char tag[tamanho_tag];
-} info;
+} Info;
 
 typedef struct no_duplo
 {
@@ -17,7 +17,7 @@ typedef struct no_duplo
 
 } Node;
 
-typedef struct no_duplo
+typedef struct lista_dupla
 {
     Node *inicio;
     Node *fim;
@@ -38,9 +38,9 @@ return node;
 }
 
 
-Lista *Cria_lista()
+List *Cria_lista()
 {
-    Lista *L = (Lista*)calloc(1 , sizeof(Lista));
+    List *L = (List*)calloc(1 , sizeof(List));
 
 L -> cursor = NULL;
 L ->inicio = NULL;
@@ -80,7 +80,7 @@ void adiciona_primeiro_lista(List*L,TypeData val)
     L= inicio = ant=p;
 
     L->inicio = L ->cursor=p;
-    L= tamanho++;
+    L = tamanho++;
 }
 void adiciona_ultimo_lista ( List *L, TypeData val )
 {
@@ -93,12 +93,12 @@ void adiciona_ultimo_lista ( List *L, TypeData val )
         else
         L= fim -> prox =p;
 
-        L -> fim = L_> cursor = p;
+        L -> fim = L-> cursor = p;
         L -> tamanho++;
     
 }
 
-voif Lista_adiciona_em_ordem(List *L, TypeData val)
+void Lista_adiciona_em_ordem(List *L, TypeData val)
 {
     if(L != NULL)
     {
@@ -118,7 +118,7 @@ voif Lista_adiciona_em_ordem(List *L, TypeData val)
                     lista_adiciona_antes_cursor(L,val);
                     return;
                 }
-                else if(atial ==L -> fim)
+                else if(atual ==L -> fim)
                 {
                     lista_adiciona_antes_cursor(L, val);
                     return;
@@ -139,14 +139,15 @@ voif Lista_adiciona_em_ordem(List *L, TypeData val)
 
 
 
-void lista_adiciona_antes_cursor( List *L, Typedata val)
+void lista_adiciona_antes_cursor( List *L, TypeData val)
 {
     if(L!= NULL)
     {
         if (L-> cursor ==NULL || lista_vazia(L) || L -> cursor == L-> inicio);
+        {
         adiciona_primeiro_lista(L,val);
-    }
-    else 
+        }
+        else 
     {
          Node *p = Cria_no(val);
 
@@ -157,11 +158,15 @@ void lista_adiciona_antes_cursor( List *L, Typedata val)
 
          L -> tamanho++;
     }
+    }
+    
     else 
-    printf("Lista Nulla, sistema hackeado pela revolução")
+    {
+    printf("Lista Nulla");
+    }
 }
 
-void lista_adiciona_depois_cursor (List * L , Typedata val)
+void lista_adiciona_depois_cursor (List * L , TypeData val)
 {
     if ( L != NULL)
     {
@@ -186,12 +191,12 @@ void lista_adiciona_depois_cursor (List * L , Typedata val)
 
 
 // mexe com posição
-void adiciona_posicao (List * L , TypeData val,int posicao, boll antes)
+void adiciona_posicao (List * L , TypeData val,int posicao, bool antes)
 {
     if(posicao<L -> tamanho)
     {
         Node *p = L-> inicio;
-        for (int i = 0, i< posicao,i++)
+        for (int i = 0; i< posicao;i++)
         {
             p = p-> prox;
         }
@@ -202,7 +207,7 @@ void adiciona_posicao (List * L , TypeData val,int posicao, boll antes)
 
     }
     else 
-    printf("Posicao indiposnivel/ nao registrada")
+    printf("Posicao indiposnivel/ nao registrada");
 }
 
 //
@@ -223,7 +228,7 @@ void remove_lista ( List *L, TypeData val)
             
             else
             {
-                L-> inicio -> ant - > NULL;
+                L-> inicio -> ant -> NULL;
                 L-> cursor =L -> inicio;
             }
             free(p);
@@ -262,3 +267,39 @@ void remove_lista ( List *L, TypeData val)
     }
 }
 
+void imprime_dados(List *L)
+{
+    Node *p = L->inicio;
+
+    while (p != NULL)
+    {
+        printf("%s %d \n ", p->val.tag,p->val.status);
+        p= p->prox;
+    }
+    
+}
+bool lista_vazia(List *L)
+{
+    return (L-> tamanho<=0);
+}
+int qual_tamanho(List *L)
+{
+    return L-> tamanho;
+}
+void imprime_lista(List *L)
+{
+    Node *p =L-> inicio;
+
+    printf("\nL ->");
+    while (p!= NULL)
+    {
+        printf(" %s ->", p->val.tag);
+        p = p->prox;
+
+    }
+    printf(" NULL");
+    printf ("\n BEGIN %s",L-> inicio ->val.tag);
+    printf("\n FIM %s", L->fim->val.tag);
+    printf("\n CURSOR %s", L->cursor ->val.tag);
+    printf("\n tamanho %d", qual_tamanho(L));
+}
