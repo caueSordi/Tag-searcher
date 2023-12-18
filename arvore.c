@@ -1,7 +1,7 @@
 
 #include "arvore.h" //inclui os Prot�tipos
 
-
+//feito no studio
 
 ArvBin* cria_ArvBin(){
     ArvBin* raiz = (ArvBin*) malloc(sizeof(ArvBin));
@@ -202,4 +202,4 @@ void Procura_preOrdem_ArvBin(ArvBin *raiz, tipo_dado, int *achou)
         Procura_preOrdem_ArvBin(&((*raiz)->esq),info,achou);
         Procura_preOrdem_ArvBin(&((*raiz)->dir),info,achou);
     }
-}
+}v
