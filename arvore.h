@@ -9,6 +9,7 @@
 #define F 0
 #define V 1
 #define tamanho_tag 9
+//porra
 
 
 /* structs */
