@@ -2,7 +2,6 @@
 #define tamanho_tag 9
 
 // strct
-
 typedef struct _info
 {
     int status;
@@ -25,6 +24,7 @@ typedef struct lista_dupla
     int tamanho;
 
 } List;
+
 //funcoes
 
 Node *Cria_no(TypeData val)
@@ -281,7 +281,7 @@ void imprime_dados(List *L)
 bool lista_vazia(List *L)
 {
     return (L-> tamanho<=0);
-}
+}a
 int qual_tamanho(List *L)
 {
     return L-> tamanho;
