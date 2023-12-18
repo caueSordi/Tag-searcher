@@ -129,30 +129,29 @@ int altura_ArvBin(ArvBin *raiz){
         return(alt_dir + 1);
 }
 
-int consulta_ArvBin(ArvBin *raiz, int valor)
+int consulta_ArvBin(ArvBin *raiz, char tag[10])
 {
     if(raiz == NULL)
         return 0;
 
     int qtdeNodes = 0;
     struct NO* atual = *raiz;
-    while(atual != NULL){
-        if strcmp((tag, atual ->info.tag,tamanho_tag) == 0 )
-        {
+    while (atual != NULL) 
+    {
+        int comparisonResult = strcmp(tag, atual->info.tag);
 
-
-            return 1;
-        }
-        if(strcmp(tag,atual ->info.tag,tamanho_tag) > 0)
+        if (comparisonResult == 0) {
+            return (qtdeNodes + 1);
+        } else if (comparisonResult > 0) {
             atual = atual->dir;
-        else
+        } else {
             atual = atual->esq;
+        }
 
-
-            qtdeNodes++;
+        qtdeNodes++;
     }
 
-    return (-1*qtdeNodes);
+    return 0; // Return 0 if the tag is not found
 }
 
 void preOrdem_ArvBin(ArvBin *raiz){
@@ -183,5 +182,24 @@ void posOrdem_ArvBin(ArvBin *raiz){
         posOrdem_ArvBin(&((*raiz)->esq));
         posOrdem_ArvBin(&((*raiz)->dir));
         printf("%d\n",(*raiz)->info);
+    }
+}
+
+void Procura_preOrdem_ArvBin(ArvBin *raiz, tipo_dado, int *achou)
+{
+    if(raiz == NULL)
+        return;
+    if (*achou)
+        return;
+    if(*raiz != NULL)
+    {
+        //if (data == (*raiz)->info)
+        if (strncmp(info.tag, (*raiz) -> info.tag, tamanho_tag) == 0)
+        {
+            printf("%s %d\n",(*raiz)->info.tag, (*raiz)->info.status);
+            *achou=1;
+        }
+        Procura_preOrdem_ArvBin(&((*raiz)->esq),info,achou);
+        Procura_preOrdem_ArvBin(&((*raiz)->dir),info,achou);
     }
 }
