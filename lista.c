@@ -1,36 +1,12 @@
 #include "lista.h"
-#define tamanho_tag 9
 
-// strct
-typedef struct _info
-{
-    int status;
-    char tag[tamanho_tag];
-} Info;
-
-typedef struct no_duplo
-{
-    TypeData val;
-    struct no_duplo *ant;
-    struct no_duplo *prox;
-
-} Node;
-
-typedef struct lista_dupla
-{
-    Node *inicio;
-    Node *fim;
-    Node *cursor;
-    int tamanho;
-
-} List;
 
 //funcoes
 
 Node *Cria_no(TypeData val)
 {
     Node*node =(Node*)calloc(1,sizeof(Node));
-strncpy(node -> val.tag,val.tag,tamanho_tag);
+strncpy(node ->val.tag,val.tag,tamanho_tag);
 node -> val.tag[strlen(node -> val.tag)] = '\0';
 node ->  val.status = val.status;
 
@@ -80,11 +56,11 @@ void adiciona_primeiro_lista(List*L,TypeData val)
     L= inicio = ant=p;
 
     L->inicio = L ->cursor=p;
-    L = tamanho++;
+    L->tamanho++;
 }
 void adiciona_ultimo_lista ( List *L, TypeData val )
 {
-    Node *p Cria_no(val);
+    Node *p = Cria_no(val);
     p ->ant = L-> fim;
     if(lista_vazia(L))
     {
@@ -147,17 +123,12 @@ void lista_adiciona_antes_cursor( List *L, TypeData val)
         {
         adiciona_primeiro_lista(L,val);
         }
-        else 
-    {
-         Node *p = Cria_no(val);
-
+        else{ Node *p = Cria_no(val);
          p->prox =L-> cursor;
          p-> ant = L -> cursor -> ant;
          L-> cursor -> ant -> prox =p;
          L -> cursor = p;
-
-         L -> tamanho++;
-    }
+         L -> tamanho++;}
     }
     
     else 
@@ -228,7 +199,8 @@ void remove_lista ( List *L, TypeData val)
             
             else
             {
-                L-> inicio -> ant -> NULL;
+                // Remove the incorrect code that assigns NULL to L->inicio->ant
+                L->inicio->ant = NULL;
                 L-> cursor =L -> inicio;
             }
             free(p);
@@ -281,7 +253,7 @@ void imprime_dados(List *L)
 bool lista_vazia(List *L)
 {
     return (L-> tamanho<=0);
-}a
+}
 int qual_tamanho(List *L)
 {
     return L-> tamanho;
