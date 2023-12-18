@@ -1,277 +1,205 @@
-#include "lista.h"
 
+#include "arvore.h" //inclui os Prot�tipos
 
-//funcoes
+//feito no studio
 
-Node *Cria_no(TypeData val)
-{
-    Node*node =(Node*)calloc(1,sizeof(Node));
-strncpy(node ->val.tag,val.tag,tamanho_tag);
-node -> val.tag[strlen(node -> val.tag)] = '\0';
-node ->  val.status = val.status;
-
-return node;
+ArvBin* cria_ArvBin(){
+    ArvBin* raiz = (ArvBin*) malloc(sizeof(ArvBin));
+    if(raiz != NULL)
+        *raiz = NULL;
+    return raiz;
 }
 
-
-List *Cria_lista()
-{
-    List *L = (List*)calloc(1 , sizeof(List));
-
-L -> cursor = NULL;
-L ->inicio = NULL;
-L -> tamanho = NULL;
-L -> fim = NULL;
-
-return L;
+void libera_NO(struct NO* no){
+    if(no == NULL)
+        return;
+    libera_NO(no->esq);
+    libera_NO(no->dir);
+    free(no);
+    no = NULL;
 }
 
-
-
-void destroi_lista( List** _L_ref)
-{
-    List *L= *_L_ref;
-    Node *p = L -> inicio;
-    Node *aux = NULL;
-
-    while(p != NULL)
-    {
-        aux=p;
-        p = p -> prox;
-        free(aux);
-    }
-    free(L);
-    *_L_ref = NULL;
+void libera_ArvBin(ArvBin* raiz){
+    if(raiz == NULL)
+        return;
+    libera_NO(*raiz);//libera cada n�
+    free(raiz);//libera a raiz
 }
 
-void adiciona_primeiro_lista(List*L,TypeData val)
-{
-    Node *p = Cria_no(val);
-    p -> prox = L -> inicio;
-    if(lista_vazia(L))
-    
-        L-> fim=p;
-    
-    else 
-    L= inicio = ant=p;
+int insere_ArvBin(ArvBin* raiz, tipo_dado data)
 
-    L->inicio = L ->cursor=p;
-    L->tamanho++;
-}
-void adiciona_ultimo_lista ( List *L, TypeData val )
 {
-    Node *p = Cria_no(val);
-    p ->ant = L-> fim;
-    if(lista_vazia(L))
-    {
-        L-> inicio;
-    }
-        else
-        L= fim -> prox =p;
+    if (raiz == NULL)
+        return 0;
+    struct NO* novo;
+    novo = (struct NO*) malloc(sizeof(struct NO));
+    if (novo == NULL)
+        return 0;
+    novo->dir = NULL;
+    novo->esq = NULL;
+strncpy(novo -> info.tag,data.tag,tamanho_tag);
+novo ->info.tag[strlen(novo ->info.tag)] '\0';
+novo -> info.status = data.status;
 
-        L -> fim = L-> cursor = p;
-        L -> tamanho++;
-    
-}
+    if (*raiz == NULL)
+        *raiz = novo;
+    else {
+        struct NO* atual = *raiz;
+        struct NO* ant = NULL;
 
-void Lista_adiciona_em_ordem(List *L, TypeData val)
-{
-    if(L != NULL)
-    {
-        if(L ->cursor == NULL || lista_vazia(L))
+
+        while (atual != NULL)
         {
-            adiciona_primeiro_lista(L, val);
-        } 
-        else 
-        {
-            Node *atual = L -> inicio; //atual = current
-            while (atual != NULL)
+            ant = atual;
+            if (strncmp(data.tag, atual->info.tag,tamanho_tag) == 0)//se zero igual ent ja tem
             {
-                L -> cursor = atual;
-
-                if(strncmp(atual ->val.tag, val.tag,tamanho_tag)>0)
-                {
-                    lista_adiciona_antes_cursor(L,val);
-                    return;
-                }
-                else if(atual ==L -> fim)
-                {
-                    lista_adiciona_antes_cursor(L, val);
-                    return;
-                }
-                atual = atual ->prox;
-
+                free(novo);
+                return 0; //já tem na arvre
             }
 
-        }
-
-    }
-    else
-    printfd("'\n\n -> Lista vazia em adiçao ordenada<-- \n\n");
-    // que percaria de função longa
-
-}
-
-
-
-
-void lista_adiciona_antes_cursor( List *L, TypeData val)
-{
-    if(L!= NULL)
-    {
-        if (L-> cursor ==NULL || lista_vazia(L) || L -> cursor == L-> inicio);
-        {
-        adiciona_primeiro_lista(L,val);
-        }
-        else{ Node *p = Cria_no(val);
-         p->prox =L-> cursor;
-         p-> ant = L -> cursor -> ant;
-         L-> cursor -> ant -> prox =p;
-         L -> cursor = p;
-         L -> tamanho++;}
-    }
-    
-    else 
-    {
-    printf("Lista Nulla");
-    }
-}
-
-void lista_adiciona_depois_cursor (List * L , TypeData val)
-{
-    if ( L != NULL)
-    {
-        if ( L ->cursor ==NULL || lista_vazia(L)|| L-> cursor == L -> fim)
-        {
-            adiciona_ultimo_lista(L, val);
-        }
-        else 
-        {
-            Node *p = Cria_no(val);
-
-            p-> prox = L -> cursor -> prox;
-            p ->ant= L -> cursor;
-            L-> cursor ->prox ->ant = p;
-            L -> cursor =p;
-
-            L -> tamanho++;
-        }
-    }
-    elseprint(" LISTA NULA ");
-}
-
-
-// mexe com posição
-void adiciona_posicao (List * L , TypeData val,int posicao, bool antes)
-{
-    if(posicao<L -> tamanho)
-    {
-        Node *p = L-> inicio;
-        for (int i = 0; i< posicao;i++)
-        {
-            p = p-> prox;
-        }
-        if(antes)
-        lista_adiciona_antes_cursor(L, val);
-        else 
-        lista_adiciona_depois_cursor(L, val);
-
-    }
-    else 
-    printf("Posicao indiposnivel/ nao registrada");
-}
-
-//
-
-void remove_lista ( List *L, TypeData val)
-{
-    if( lista_vazia(L))
-    {
-        Node *p = L -> inicio;
-
-        if(strncmp(L->inicio -> val.tag,val.tag,tamanho_tag)==0)
-        {
-            L -> inicio =p -> prox;
-
-            if(L-> fim == p)
-
-            L->fim=L-> cursor = NULL;
-            
+            if (strncmp(data.tag, atual->info.tag,tamanho_tag) > 0)
+                atual = atual->dir;
             else
-            {
-                // Remove the incorrect code that assigns NULL to L->inicio->ant
-                L->inicio->ant = NULL;
-                L-> cursor =L -> inicio;
-            }
-            free(p);
-            L ->tamanho--;
-
+                atual = atual->esq;
         }
+        if (strncmp(data.tag, atual->info.tag,tamanho_tag) > 0)
+            ant->dir = novo;
         else
-        {
-            p=p-> prox;
+            ant->esq = novo;
+    }
+    return 1;
+}
 
-            while ( p!= NULL)
-            {
-                if(strncmp(p-> val.tag,val.tag, tamanho_tag)==0)
-                {
-                    p -> ant -> prox =p -> prox;
-                    if (L -> fim ==p)
-                    {
-                        L-> fim = p -> ant;
-                    } 
-      else
-                    {
-                        p -> ant -> prox = p -> ant;
-                    }
 
-                    L -> cursor = p -> ant;
-                    free(p);
-                    p = NULL;
-                    L -> tamanho--;
-                }
-                else{
+struct NO* remove_atual(struct NO* atual) {
+    struct NO *no1, *no2;
+    if(atual->esq == NULL){
+        no2 = atual->dir;
+        free(atual);
+        return no2;
+    }
+    no1 = atual;
+    no2 = atual->esq;
+    while(no2->dir != NULL){
+        no1 = no2;
+        no2 = no2->dir;
+    }
+    // no2 � o n� anterior a r na ordem e-r-d
+    // no1 � o pai de no2
+    if(no1 != atual){
+        no1->dir = no2->esq;
+        no2->esq = atual->esq;
+    }
+    no2->dir = atual->dir;
+    free(atual);
+    return no2;
+}
+// http://www.ime.usp.br/~pf/algoritmos/aulas/binst.html
+//no one cares about the remove, amen
 
-                    p=p-> prox;
-                }
-            }
+
+int estaVazia_ArvBin(ArvBin *raiz){
+    if(raiz == NULL)
+        return 1;
+    if(*raiz == NULL)
+        return 1;
+    return 0;
+}
+
+int totalNO_ArvBin(ArvBin *raiz){
+    if (raiz == NULL)
+        return 0;
+    if (*raiz == NULL)
+        return 0;
+    int alt_esq = totalNO_ArvBin(&((*raiz)->esq));
+    int alt_dir = totalNO_ArvBin(&((*raiz)->dir));
+    return(alt_esq + alt_dir + 1);
+}
+
+int altura_ArvBin(ArvBin *raiz){
+    if (raiz == NULL)
+        return 0;
+    if (*raiz == NULL)
+        return 0;
+    int alt_esq = altura_ArvBin(&((*raiz)->esq));
+    int alt_dir = altura_ArvBin(&((*raiz)->dir));
+    if (alt_esq > alt_dir)
+        return (alt_esq + 1);
+    else
+        return(alt_dir + 1);
+}
+
+int consulta_ArvBin(ArvBin *raiz, char tag[10])
+{
+    if(raiz == NULL)
+        return 0;
+
+    int qtdeNodes = 0;
+    struct NO* atual = *raiz;
+    while (atual != NULL) 
+    {
+        int comparisonResult = strcmp(tag, atual->info.tag);
+
+        if (comparisonResult == 0) {
+            return (qtdeNodes + 1);
+        } else if (comparisonResult > 0) {
+            atual = atual->dir;
+        } else {
+            atual = atual->esq;
         }
+
+        qtdeNodes++;
     }
+
+    return 0; // Return 0 if the tag is not found
 }
 
-void imprime_dados(List *L)
-{
-    Node *p = L->inicio;
-
-    while (p != NULL)
+void preOrdem_ArvBin(ArvBin *raiz){
+    if(raiz == NULL)
+        return;
+    if(*raiz != NULL)
     {
-        printf("%s %d \n ", p->val.tag,p->val.status);
-        p= p->prox;
+        printf ("%s %d\n"), ((*raiz)->info.tag,(*raiz)->info.status);
+        preOrdem_ArvBin(&((*raiz)->esq));
+        preOrdem_ArvBin(&((*raiz)->dir));
     }
-    
 }
-bool lista_vazia(List *L)
-{
-    return (L-> tamanho<=0);
-}
-int qual_tamanho(List *L)
-{
-    return L-> tamanho;
-}
-void imprime_lista(List *L)
-{
-    Node *p =L-> inicio;
 
-    printf("\nL ->");
-    while (p!= NULL)
+void emOrdem_ArvBin(ArvBin *raiz){
+    if(raiz == NULL)
+        return;
+    if(*raiz != NULL){
+        emOrdem_ArvBin(&((*raiz)->esq));
+        printf("%s %d\n",(*raiz)->info.tag,(*raiz)->info.status);
+        emOrdem_ArvBin(&((*raiz)->dir));
+    }
+}
+
+void posOrdem_ArvBin(ArvBin *raiz){
+    if(raiz == NULL)
+        return;
+    if(*raiz != NULL){
+        posOrdem_ArvBin(&((*raiz)->esq));
+        posOrdem_ArvBin(&((*raiz)->dir));
+        printf("%d\n",(*raiz)->info);
+    }
+}
+
+void Procura_preOrdem_ArvBin(ArvBin *raiz, tipo_dado, int *achou)
+{
+    if(raiz == NULL)
+        return;
+    if (*achou)
+        return;
+    if(*raiz != NULL)
     {
-        printf(" %s ->", p->val.tag);
-        p = p->prox;
-
+        //if (data == (*raiz)->info)
+        if (strncmp(Info.tag, (*raiz) -> Info.tag, tamanho_tag) == 0)
+        {
+            printf("%s %d\n",(*raiz)->info.tag, (*raiz)->info.status);
+            *achou=1;
+        }
+        Procura_preOrdem_ArvBin(&((*raiz)->esq),info,achou);
+        Procura_preOrdem_ArvBin(&((*raiz)->dir),info,achou);
     }
-    printf(" NULL");
-    printf ("\n BEGIN %s",L-> inicio ->val.tag);
-    printf("\n FIM %s", L->fim->val.tag);
-    printf("\n CURSOR %s", L->cursor ->val.tag);
-    printf("\n tamanho %d", qual_tamanho(L));
 }
