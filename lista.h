@@ -15,8 +15,11 @@
 typedef struct _info
 {
     int status;
-    char tag[tamanho_tag];
+
+    char tag [tamanho_tag];
 } Info;
+
+typedef Info TypeData;
 
 typedef struct no_duplo
 {
@@ -35,7 +38,7 @@ typedef struct lista_dupla
 
 } List;
 
-typedef Info TypeData;
+
 
 Node *Cria_no (TypeData val);
 List *Cria_lista();
