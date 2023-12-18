@@ -38,7 +38,7 @@ int insere_ArvBin(ArvBin* raiz, tipo_dado data)
     novo->dir = NULL;
     novo->esq = NULL;
 strncpy(novo -> info.tag,data.tag,tamanho_tag);
-novo ->info.tag[strlen(novo ->info.tag)] '\0';
+novo ->info.tag[strlen(novo ->info.tag)] ;'\0';
 novo -> info.status = data.status;
 
     if (*raiz == NULL)
@@ -181,7 +181,7 @@ void posOrdem_ArvBin(ArvBin *raiz){
     if(*raiz != NULL){
         posOrdem_ArvBin(&((*raiz)->esq));
         posOrdem_ArvBin(&((*raiz)->dir));
-        printf("%d\n",(*raiz)->info);
+        printf("%d\n",(*raiz)->info.status);
     }
 }
 
@@ -194,12 +194,12 @@ void Procura_preOrdem_ArvBin(ArvBin *raiz, tipo_dado, int *achou)
     if(*raiz != NULL)
     {
         //if (data == (*raiz)->info)
-        if (strncmp(Info.tag, (*raiz) -> Info.tag, tamanho_tag) == 0)
+        if (strncmp(info.tag, (*raiz)->info.tag, tamanho_tag) == 0)
         {
             printf("%s %d\n",(*raiz)->info.tag, (*raiz)->info.status);
             *achou=1;
         }
         Procura_preOrdem_ArvBin(&((*raiz)->esq),info,achou);
-        Procura_preOrdem_ArvBin(&((*raiz)->dir),info,achou);
+        Procura_preOrdem_ArvBin(&((*raiz)->dir), info, achou);
     }
 }
