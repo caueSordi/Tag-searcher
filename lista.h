@@ -1,16 +1,39 @@
-#ifndef LIST_H_INCLUDED
-#define LIST_H_INCLUDED
+
+#ifndef LISTA_H_INCLUDED
+#define LISTA_H_INCLUDED
 
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#define tamanho_tag 9
+
 #define maximo 100
 
-typedef struct _info Info;
-typedef struct no_duplo;
-typedef struct lista_dupla;
+// strct
+typedef struct _info
+{
+    int status;
+    char tag[tamanho_tag];
+} Info;
+
+typedef struct no_duplo
+{
+    TypeData val;
+    struct no_duplo *ant;
+    struct no_duplo *prox;
+
+}Node;
+
+typedef struct lista_dupla
+{
+    Node *inicio;
+    Node *fim;
+    Node *cursor;
+    int tamanho;
+
+} List;
 
 typedef Info TypeData;
 
@@ -39,4 +62,4 @@ bool lista_vazia(List *L);
 bool lista_vazia(List *L);
 
 
-#endif // LIST_H_INCLUDED
+#endif 
