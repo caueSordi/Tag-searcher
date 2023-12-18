@@ -10,7 +10,7 @@ int main()
 {
   char line[t_tamanho];
 
-  List *L = List_Create();
+  List *L = Cria_lista();
 
   ArvBin* root = cria_ArvBin();
 
