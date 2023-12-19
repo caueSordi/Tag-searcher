@@ -6,6 +6,7 @@
 Node *Cria_no(TypeData val)
 {
     Node*node =(Node*)calloc(1,sizeof(Node));
+    
 strncpy(node ->val.tag,val.tag,tamanho_tag);
 node -> val.tag[strlen(node -> val.tag)] = '\0';
 node ->  val.status = val.status;
