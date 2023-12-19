@@ -21,6 +21,7 @@ typedef struct _info
 
 typedef Info TypeData;
 
+
 typedef struct no_duplo
 {
     TypeData val;
@@ -56,6 +57,7 @@ void imprime_dados(List *L);
 void imprime_lista(List *L);
 bool lista_vazia(List *L);
 
+int qual_tamanho(List *L);
 
 
 
