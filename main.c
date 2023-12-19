@@ -4,6 +4,7 @@
 #include "arvore.h"
 #include "lista.h"
 
+
 #define t_tamanho 20
 
 int main()
@@ -25,7 +26,6 @@ int main()
     char c = 'x';
 
     fgets(line, t_tamanho, fp);
-
     line[strcspn(line, "\r\n")] = 0;
 
     line[strlen(line)] = '\0';
@@ -61,14 +61,14 @@ int main()
   {
     case 0:
     {
-      printf("NL:%d NA:%d\n", List_GetSize(L), totalNO_ArvBin(root));
+      printf("NL:%d NA:%d\n", qual_tamanho(L), totalNO_ArvBin(root));
       break;
     }
     case 1:
     {
       int pos_lista, treePos;
 
-      pos_lista = List_Search(L, tag);
+      pos_lista = qual_tamanho(L);
       treePos = consulta_ArvBin(root, tag);
 
       if ((treePos > 0) && (pos_lista > 0))
