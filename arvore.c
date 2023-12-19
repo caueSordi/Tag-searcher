@@ -22,7 +22,7 @@ void libera_NO(struct NO* no){
 void libera_ArvBin(ArvBin* raiz){
     if(raiz == NULL)
         return;
-    libera_NO(*raiz);//libera cada n�
+    libera_NO(*raiz);//libera cada n
     free(raiz);//libera a raiz
 }
 
@@ -185,7 +185,7 @@ void posOrdem_ArvBin(ArvBin *raiz){
     }
 }
 
-void Procura_preOrdem_ArvBin(ArvBin *raiz, tipo_dado, int *achou)
+void Procura_preOrdem_ArvBin(ArvBin *raiz, tipo_dado info, int *achou)
 {
     if(raiz == NULL)
         return;
