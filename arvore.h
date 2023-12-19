@@ -46,6 +46,6 @@ void emOrdem_ArvBin(ArvBin *raiz);
 void posOrdem_ArvBin(ArvBin *raiz);
 
 
-
+void Procura_preOrdem_ArvBin(ArvBin *raiz, tipo_dado info, int *achou);
 
 #endif // ARVORE_H_INCLUDED
